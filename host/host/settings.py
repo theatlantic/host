@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'articles',
+    'pipeline',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -101,3 +102,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'pipeline.finders.PipelineFinder',
+)
+
+# Django pipeline
+PIPELINE_COMPILERS = (
+    'pipeline.compilers.sass.SASSCompiler',
+)
+
+PIPELINE_CSS = {
+    "main": {
+        "source_filenames": ('css/main.scss',),
+        "output_filename": "css/main.css",
+    }
+}
+
+PIPELINE_JS = {
+    "main": {
+        "source_filenames": ('js/main.js',),
+        "output_filename": "js/main.js",
+    }
+}
