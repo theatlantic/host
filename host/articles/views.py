@@ -20,13 +20,6 @@ class PreView(TemplateView):
             annotation_text = self._process_annotations(annotation.text)
             annotation_tree = html.fromstring(annotation_text)
 
-            annotation_tree.tag = "span"
-
-            try:
-                annotation_tree.attrib['class'] += " annotation"
-            except KeyError:
-                annotation_tree.attrib['class'] = "annotation"
-
             annotation_tree.tail = link.tail
             link.tail = ""
 

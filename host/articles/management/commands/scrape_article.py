@@ -40,12 +40,20 @@ class Command(BaseCommand):
             first_paragraph = annotation_tree.xpath("//p[1]")[0]
 
             first_paragraph.attrib['class'] = class_number_re.sub(r"\1", first_paragraph.attrib['class'])
+            first_paragraph.attrib['class'] += " annotation"
 
-            annotation = Annotation.objects.create(parent=parent,
-                                                   text=html.tostring(first_paragraph))
+            first_paragraph.tag = "span"
+
+            annotation = Annotation.objects.create(parent=parent,)
+            first_paragraph.attrib['data-annotation'] = str(annotation.pk)
+
+            annotation.text = html.tostring(first_paragraph)
+            annotation.save()
 
             del element.attrib['onclick']
             del element.attrib['target']
+
+            element.attrib["href"] = "#"
 
             try:
                 element.attrib['class'] += " annotation-link"
