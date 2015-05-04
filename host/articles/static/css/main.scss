@@ -1,10 +1,15 @@
 body {
     line-height: 1.6666;
     font-size: 18px;
-    width: 630px;
+    width: 96%;
+    max-width: 630px;
     font-family: "Lyon Text", "Times New Roman", serif;
     margin: 0 auto;
     padding-right: 330px;
+
+    @media(max-width: 1010px) {
+        padding-right: 0;
+    }
 }
 
 .annotation-link {
