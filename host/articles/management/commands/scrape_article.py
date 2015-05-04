@@ -20,8 +20,14 @@ class Command(BaseCommand):
         for element in onclick_elements:
             annotation_path = url_match.findall(element.attrib["onclick"])[0]
 
+            broken_paths = [
+                "/200504-wallace/58c.mhtml",
+                "/200504-wallace/58d.mhtml",
+                "/200504-wallace/67d.mhtml",
+            ]
+
             # Rather than fixing this bug, I'm just working around it.
-            if annotation_path == "/200504-wallace/58c.mhtml":
+            if annotation_path in broken_paths:
                 annotation_path = "/static/coma/html%s" % annotation_path
 
             annotation_url = "%s%s" % ("http://www.theatlantic.com", annotation_path)
@@ -35,6 +41,11 @@ class Command(BaseCommand):
 
             del element.attrib['onclick']
             del element.attrib['target']
+
+            try:
+                element.attrib['class'] += " annotation-link"
+            except KeyError:
+                element.attrib['class'] = "annotation-link"
 
             element.attrib['data-annotation'] = str(annotation.pk)
 
