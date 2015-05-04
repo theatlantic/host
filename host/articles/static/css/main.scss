@@ -2,150 +2,54 @@ body {
     line-height: 1.6;
 }
 
+$colors: (
+    "orange": (color: #fec, accent: #fc6),
+    "green": (color: #dfd, accent: #7d7),
+    "red": (color: #fed, accent: #eba),
+    "purple": (color: #eef, accent: #bbe),
+    "pink": (color: #fee, accent: #ebb),
+    "blue": (color: #def, accent: #ace),
+    "chartreuse": (color: #efc, accent: #ae6),
+);
+
+@each $name, $values in $colors {
+    .annotation-link.#{$name} {
+        background-color: map-get($values, color);
+        border-color: map-get($values, accent);
+
+        &:hover {
+            background: map-get($values, accent);
+        }
+    }
+
+    .annotation .annotation-link.#{$name} {
+        background-color: map-get($values, accent);
+        border-color: map-get($values, accent);
+
+        &:hover {
+            background-color: map-get($values, color);
+        }
+    }
+
+    .annotation.#{$name} {
+        background-color: map-get($values, color);
+        border-color: map-get($values, accent);
+    }
+}
+
 /*  Stuff for the Wallace piece */
 
 .annotation-link {
     text-decoration: none;
     color: #000;
+    background: #ccc;
+    border-width: 1px;
+    border-style: solid;
     padding: 0px 1px 0px 1px;
 }
 
 .annotation-link:hover {
     color: #000;
-}
-
-.annotation-link.orange {
-    border: 1px solid #fc6;
-    background-color: #fec;
-}
-
-.annotation-link.orange:hover {
-    background-color: #fc6;
-}
-
-.annotation-link.green {
-    border: 1px solid #7d7;
-    background-color: #dfd;
-}
-
-.annotation-link.green:hover {
-    background-color: #7d7;
-}
-
-.annotation-link.red {
-    border: 1px solid #eba;
-    background-color: #fed;
-}
-
-.annotation-link.red:hover {
-    background-color: #eba;
-}
-
-.annotation-link.purple {
-    border: 1px solid #bbe;
-    background-color: #eef;
-}
-
-.annotation-link.purple:hover {
-    color: #000;
-    background-color: #bbe;
-}
-
-.annotation-link.pink {
-    border: 1px solid #ebb;
-    background-color: #fee;
-}
-
-.annotation-link.pink:hover {
-    background-color: #ebb;
-}
-
-.annotation-link.blue {
-    border: 1px solid #ace;
-    background-color: #def;
-}
-
-.annotation-link.blue:hover {
-    background-color: #ace;
-}
-
-.annotation-link.chartreuse {
-    border: 1px solid #ae6;
-    background-color: #efc;
-}
-
-.annotation-link.chartreuse:hover {
-    background-color: #ae6;
-}
-
-.annotation-link.orange2 {
-    background-color: #fc6;
-    border: 1px solid #fec;
-}
-
-.annotation-link.orange2:hover {
-    background-color: #fec;
-    border: 1px solid #fc6;
-}
-
-.annotation-link.green2 {
-    background-color: #7d7;
-    border: 1px solid #dfd;
-}
-
-.annotation-link.green2:hover {
-    background-color: #dfd;
-    border: 1px solid #7d7;
-}
-
-.annotation-link.red2 {
-    background-color: #eba;
-    border: 1px solid #fed;
-}
-
-.annotation-link.red2:hover {
-    background-color: #fed;
-    border: 1px solid #eba;
-}
-
-.annotation-link.purple2 {
-    background-color: #bbe;
-    border: 1px solid #eef;
-}
-
-.annotation-link.purple2:hover {
-    background-color: #eef;
-    border: 1px solid #bbe;
-}
-
-.annotation-link.pink2 {
-    background-color: #ebb;
-    border: 1px solid #fee;
-}
-
-.annotation-link.pink2:hover {
-    background-color: #fee;
-    border: 1px solid #ebb;
-}
-
-.annotation-link.blue2 {
-    background-color: #ace;
-    border: 1px solid #def;
-}
-
-.annotation-link.blue2:hover {
-    background-color: #def;
-    border: 1px solid #ace;
-}
-
-.annotation-link.chartreuse2 {
-    background-color: #ae6;
-    border: 1px solid #efc;
-}
-
-.annotation-link.chartreuse2:hover {
-    background-color: #efc;
-    border: 1px solid #ae6;
 }
 
 .annotation {
@@ -156,39 +60,6 @@ body {
     width: 50%;
     float: left;
     clear: left;
-}
-
-.annotation.orange1 {
-    border: 1px solid #fc6;
-    background-color: #fec;
-}
-
-.annotation.green1 {
-    border: 1px solid #7d7;
-    background-color: #dfd;
-}
-
-.annotation.red1 {
-    border: 1px solid #eba;
-    background-color: #fed;
-}
-
-.annotation.purple1 {
-    border: 1px solid #bbe;
-    background-color: #eef;
-}
-
-.annotation.pink1 {
-    border: 1px solid #ebb;
-    background-color: #fee;
-}
-
-.annotation.blue1 {
-    border: 1px solid #ace;
-    background-color: #def;
-}
-
-.annotation.chartreuse1 {
-    border: 1px solid #ae6;
-    background-color: #efc;
+    border-width: 1px;
+    border-style: solid;
 }

@@ -11,6 +11,9 @@ import requests
 from articles.models import Article, Annotation
 
 
+class_number_re = re.compile(r"([a-z]+)\d{1}")
+
+
 class Command(BaseCommand):
     help = "Scrape host and import it and its annotations"
 
@@ -36,6 +39,8 @@ class Command(BaseCommand):
             annotation_tree = html.fromstring(annotation_resp.content)
             first_paragraph = annotation_tree.xpath("//p[1]")[0]
 
+            first_paragraph.attrib['class'] = class_number_re.sub(r"\1", first_paragraph.attrib['class'])
+
             annotation = Annotation.objects.create(parent=parent,
                                                    text=html.tostring(first_paragraph))
 
@@ -44,6 +49,7 @@ class Command(BaseCommand):
 
             try:
                 element.attrib['class'] += " annotation-link"
+                element.attrib['class'] = class_number_re.sub(r"\1", element.attrib['class'])
             except KeyError:
                 element.attrib['class'] = "annotation-link"
 

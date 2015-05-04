@@ -43,3 +43,7 @@ class PreView(TemplateView):
         context = super(PreView, self).get_context_data(**kwargs)
         context['article'] = self.get_article_content()
         return context
+
+
+class StyleView(TemplateView):
+    template_name = "styles.html"
