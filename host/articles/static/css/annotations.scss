@@ -1,4 +1,6 @@
 .article-body {
+    counter-reset: footnotes;
+
     .annotation-link {
         text-decoration: none;
         color: #000;
@@ -9,12 +11,21 @@
             content: " [+]";
             font-size: 14px;
             vertical-align: middle;
+
+            @media only print {
+                counter-increment: footnotes;
+                content: " [" counter(footnotes) "]";
+            }
         }
     }
 
     .annotation-link.active {
         &:after {
             content: " [-]";
+
+            @media only print {
+                content: " [" counter(footnotes) "]";
+            }
         }
     }
 
@@ -32,6 +43,27 @@
         padding: 30px;
         margin: 1em 0;
         border-radius: 4px;
+
+        @media only print {
+            display: block;
+            font-size: 12px;
+            padding: 10px;
+            margin-right: 1em;
+            width: 30%;
+            float: left;
+            clear: left;
+            border-radius: 0;
+            border: 1px solid #333;
+
+            & .annotation {
+                width: auto;
+                margin-right: 0;
+            }
+
+            &:before {
+                content: "[" counter(footnotes) "] ";
+            }
+        }
     }
 
     .annotation.active {
