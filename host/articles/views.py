@@ -13,18 +13,26 @@ class PreView(TemplateView):
 
         annotation_links = text_tree.xpath("//a[@data-annotation]")
 
-        for link in annotation_links:
-            annotation_id = int(link.attrib['data-annotation'])
-            annotation = Annotation.objects.get(pk=annotation_id)
+        if annotation_links:
+            inserted_annotations = []
+            annotation_links.reverse()
+            for link in annotation_links:
+                annotation_id = int(link.attrib['data-annotation'])
 
-            annotation_text = self._process_annotations(annotation.text)
-            annotation_tree = html.fromstring(annotation_text)
+                if annotation_id in inserted_annotations:
+                    continue
+                inserted_annotations += [annotation_id]
 
-            annotation_tree.tail = link.tail
-            link.tail = ""
+                annotation = Annotation.objects.get(pk=annotation_id)
 
-            parent_elem = link.getparent()
-            parent_elem.insert(parent_elem.index(link) + 1, annotation_tree)
+                annotation_text = self._process_annotations(annotation.text)
+                annotation_tree = html.fromstring(annotation_text)
+
+                annotation_tree.tail = link.tail
+                link.tail = ""
+
+                parent_elem = link.getparent()
+                parent_elem.insert(parent_elem.index(link) + 1, annotation_tree)
 
         return html.tostring(text_tree)
 

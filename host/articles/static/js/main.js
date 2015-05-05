@@ -3,6 +3,6 @@ $(document).ready(function() {
         e.preventDefault();
         var annotation_id = $(this).data("annotation");
         $(this).toggleClass("active");
-        $(".article-body .annotation[data-annotation=" + annotation_id + "]").toggleClass("active");
+        $(".article-body .annotation[data-annotation=" + annotation_id + "]").toggleClass("active").attr("style", "");
     });
 });

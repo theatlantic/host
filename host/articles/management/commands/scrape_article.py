@@ -4,6 +4,7 @@ import re
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 
 from lxml import html
 import requests
@@ -44,8 +45,14 @@ class Command(BaseCommand):
 
             first_paragraph.tag = "span"
 
-            annotation = Annotation.objects.create(parent=parent,)
+            annotation, _ = Annotation.objects.get_or_create(
+                parent_id=parent.id,
+                parent_ctype=ContentType.objects.get_for_model(parent),
+                original_text=html.tostring(first_paragraph)
+            )
+
             first_paragraph.attrib['data-annotation'] = str(annotation.pk)
+            first_paragraph.attrib['style'] = "display: none;"
 
             annotation.text = html.tostring(first_paragraph)
             annotation.save()
@@ -69,6 +76,8 @@ class Command(BaseCommand):
         parent.save()
 
     def handle(self, *args, **kwargs):
+        os.remove(settings.DATABASES['default']['NAME'])
+        call_command("migrate")
         call_command("flush", "--noinput")
 
         article_file = os.path.join(settings.BASE_DIR, "data", "article.html")

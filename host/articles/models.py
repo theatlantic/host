@@ -11,6 +11,8 @@ class Article(models.Model):
 
 class Annotation(models.Model):
     text = models.TextField()
+    original_text = models.TextField()
+
     annotations = GenericRelation("Annotation", object_id_field="parent_id",
                                   content_type_field="parent_ctype")
 
