@@ -4,6 +4,18 @@
         color: #000;
         padding: 4px;
         border-radius: 4px;
+
+        &:after {
+            content: " [+]";
+            font-size: 14px;
+            vertical-align: middle;
+        }
+    }
+
+    .annotation-link.active {
+        &:after {
+            content: " [-]";
+        }
     }
 
     .annotation-link:hover {
