@@ -16,9 +16,10 @@ body {
     text-decoration: none;
     color: #000;
     background: #ccc;
-    border-width: 1px;
+    border-width: 0px;
     border-style: solid;
-    padding: 0px 1px;
+    padding: 4px 4px;
+    border-radius: 4px;
 }
 
 .annotation-link:hover {
@@ -26,12 +27,17 @@ body {
 }
 
 .annotation {
+    font-family: "Proxima Nova", sans-serif;
+    font-weight: 300;
+    font-size: 17px;
     display: none;
     color: #000;
-    padding: 8px;
-    margin: 10px;
-    border-width: 1px;
+    background: #eee;
+    padding: 30px;
+    margin: 1em 0;
+    border-width: 0px;
     border-style: solid;
+    border-radius: 4px;
 }
 
 .annotation.active {
@@ -39,36 +45,21 @@ body {
 }
 
 $colors: (
-    "orange": (color: #fec, accent: #fc6),
-    "green": (color: #dfd, accent: #7d7),
-    "red": (color: #fed, accent: #eba),
-    "purple": (color: #eef, accent: #bbe),
-    "pink": (color: #fee, accent: #ebb),
-    "blue": (color: #def, accent: #ace),
-    "chartreuse": (color: #efc, accent: #ae6),
+    "orange": #fc6,
+    "green": #7d7,
+    "red": #eba,
+    "purple": #bbe,
+    "pink": #ebb,
+    "blue": #ace,
+    "chartreuse": #ae6,
 );
 
-@each $name, $values in $colors {
+@each $name, $color in $colors {
     .annotation-link.#{$name} {
-        background-color: map-get($values, color);
-        border-color: map-get($values, accent);
-
-        &:hover {
-            background: map-get($values, accent);
-        }
-    }
-
-    .annotation .annotation-link.#{$name} {
-        background-color: map-get($values, accent);
-        border-color: map-get($values, accent);
-
-        &:hover {
-            background-color: map-get($values, color);
-        }
+        background-color: $color;
     }
 
     .annotation.#{$name} {
-        background-color: map-get($values, color);
-        border-color: map-get($values, accent);
+        background-color: rgba($color, 0.25);
     }
 }
