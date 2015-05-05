@@ -133,3 +133,6 @@ PIPELINE_JS = {
         "output_filename": "js/main.js",
     }
 }
+
+PIPELINE_CSS_COMPRESSOR = ""
+PIPELINE_JS_COMPRESSOR = ""
