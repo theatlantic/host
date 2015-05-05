@@ -1,0 +1,48 @@
+.article-body {
+    .annotation-link {
+        text-decoration: none;
+        color: #000;
+        padding: 4px;
+        border-radius: 4px;
+    }
+
+    .annotation-link:hover {
+        color: #000;
+    }
+
+    .annotation {
+        font-family: "Proxima Nova", sans-serif;
+        font-weight: 300;
+        font-size: 0.94444444444em;
+        display: none;
+        color: #000;
+        background: #eee;
+        padding: 30px;
+        margin: 1em 0;
+        border-radius: 4px;
+    }
+
+    .annotation.active {
+        display: block;
+    }
+
+    $colors: (
+        "orange": #f9bd4e,
+        "green": #50cea8,
+        "red": #f47453,
+        "purple": #c493ff,
+        "pink": #e1708c,
+        "blue": #3eabb4,
+        "chartreuse": #abdb42,
+    );
+
+    @each $name, $color in $colors {
+        .annotation-link.#{$name} {
+            background-color: $color;
+        }
+
+        .annotation.#{$name} {
+            background-color: rgba($color, 0.55);
+        }
+    }
+}

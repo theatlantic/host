@@ -120,6 +120,10 @@ PIPELINE_CSS = {
     "main": {
         "source_filenames": ('css/main.scss',),
         "output_filename": "css/main.css",
+    },
+    "annotations": {
+        "source_filenames": ('css/annotations.scss',),
+        "output_filename": "css/annotations.css",
     }
 }
 
