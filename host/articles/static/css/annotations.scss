@@ -64,7 +64,8 @@
         }
     }
 
-    .annotation.active {
+    .annotation.active,
+    .annotation:target {
         display: block !important;
     }
 

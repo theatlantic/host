@@ -137,3 +137,5 @@ PIPELINE_JS = {
 
 PIPELINE_CSS_COMPRESSOR = ""
 PIPELINE_JS_COMPRESSOR = ""
+
+ORIGINAL_URL = "http://www.theatlantic.com/magazine/archive/2005/04/host/303812/"

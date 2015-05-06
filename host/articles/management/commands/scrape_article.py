@@ -52,6 +52,7 @@ class Command(BaseCommand):
             )
 
             first_paragraph.attrib['data-annotation'] = str(annotation.pk)
+            first_paragraph.attrib['id'] = "annotation%s" % annotation.pk
             first_paragraph.attrib['style'] = "display: none;"
 
             annotation.text = html.tostring(first_paragraph)
@@ -60,7 +61,7 @@ class Command(BaseCommand):
             del element.attrib['onclick']
             del element.attrib['target']
 
-            element.attrib["href"] = "#"
+            element.attrib["href"] = "%s#annotation%s" % (settings.ORIGINAL_URL, annotation.pk)
 
             try:
                 element.attrib['class'] += " annotation-link"
