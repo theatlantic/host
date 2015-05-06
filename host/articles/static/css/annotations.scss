@@ -1,6 +1,4 @@
 .article-body {
-    counter-reset: footnotes;
-
     .annotation-link {
         text-decoration: none;
         color: #000;
@@ -14,7 +12,7 @@
 
             @media only print {
                 counter-increment: footnotes;
-                content: " [" counter(footnotes) "]";
+                content: " [" attr(data-annotation) "]";
             }
         }
     }
@@ -24,7 +22,7 @@
             content: " [-]";
 
             @media only print {
-                content: " [" counter(footnotes) "]";
+                content: " [" attr(data-annotation) "]";
             }
         }
     }
@@ -45,7 +43,7 @@
         border-radius: 4px;
 
         @media only print {
-            display: block;
+            display: block !important;
             font-size: 12px;
             padding: 10px;
             margin-right: 1em;
@@ -61,13 +59,13 @@
             }
 
             &:before {
-                content: "[" counter(footnotes) "] ";
+                content: "[" attr(data-annotation) "] ";
             }
         }
     }
 
     .annotation.active {
-        display: block;
+        display: block !important;
     }
 
     $colors: (
