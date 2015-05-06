@@ -46,5 +46,9 @@ class PreView(TemplateView):
         return context
 
 
+class ExportView(PreView):
+    template_name = "export.html"
+
+
 class StyleView(TemplateView):
     template_name = "styles.html"
