@@ -101,7 +101,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_PATH = '/static/'
+STATIC_URL = 'http://cbarna2.njgroup.com:8000%s' % STATIC_PATH
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
