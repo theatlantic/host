@@ -103,7 +103,7 @@ USE_TZ = True
 
 STATIC_PATH = '/static/'
 STATIC_URL = 'http://cbarna2.njgroup.com:8000%s' % STATIC_PATH
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 STATICFILES_FINDERS = (
