@@ -64,6 +64,11 @@
         }
     }
 
+    .annotation .blockquote {
+        margin: 1em;
+        display: block;
+    }
+
     .annotation.active,
     .annotation:target {
         display: block !important;

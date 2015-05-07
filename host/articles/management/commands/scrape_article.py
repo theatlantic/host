@@ -22,6 +22,7 @@ class Command(BaseCommand):
         onclick_elements = tree.xpath("//a[@onclick]")
         url_match = re.compile(r"window.open\('(.+?)'")
         for element in onclick_elements:
+            color = element.attrib['class']
             annotation_path = url_match.findall(element.attrib["onclick"])[0]
 
             broken_paths = [
@@ -38,24 +39,39 @@ class Command(BaseCommand):
             annotation_resp = requests.get(annotation_url)
 
             annotation_tree = html.fromstring(annotation_resp.content)
-            first_paragraph = annotation_tree.xpath("//p[1]")[0]
-
-            first_paragraph.attrib['class'] = class_number_re.sub(r"\1", first_paragraph.attrib['class'])
-            first_paragraph.attrib['class'] += " annotation"
-
-            first_paragraph.tag = "span"
+            annotation_content = annotation_tree.xpath("//font[@class='covertype']")[0]
+            del annotation_content[len(annotation_content) - 1]  # Delete the last paragraph.
 
             annotation, _ = Annotation.objects.get_or_create(
                 parent_id=parent.id,
                 parent_ctype=ContentType.objects.get_for_model(parent),
-                original_text=html.tostring(first_paragraph)
+                original_text=html.tostring(annotation_content)
             )
 
-            first_paragraph.attrib['data-annotation'] = str(annotation.pk)
-            first_paragraph.attrib['id'] = "annotation%s" % annotation.pk
-            first_paragraph.attrib['style'] = "display: none;"
+            annotation_content.attrib['class'] = class_number_re.sub(r"\1", color)
+            annotation_content.attrib['class'] += " annotation"
 
-            annotation.text = html.tostring(first_paragraph)
+            annotation_content.tag = "span"
+
+            annotation_content.attrib['data-annotation'] = str(annotation.pk)
+            annotation_content.attrib['id'] = "annotation%s" % annotation.pk
+            annotation_content.attrib['style'] = "display: none;"
+
+            for paragraph in annotation_content.xpath("//p"):
+                paragraph.tag = "span"
+
+            # Replace all the paragraphs with non-paragraphs.
+            for table in annotation_content.xpath("//table"):
+                font_tag = table.xpath("//font[@class='covertype']")[0]
+                font_tag.tag = "span"
+                font_tag.attrib['class'] = "blockquote"
+                font_tag.tail = table.tail
+
+                parent_elem = table.getparent()
+                parent_elem.insert(parent_elem.index(table), font_tag)
+                parent_elem.remove(table)
+
+            annotation.text = html.tostring(annotation_content)
             annotation.save()
 
             del element.attrib['onclick']
@@ -71,7 +87,7 @@ class Command(BaseCommand):
 
             element.attrib['data-annotation'] = str(annotation.pk)
 
-            self._find_annotations(first_paragraph, annotation)
+            self._find_annotations(annotation_content, annotation)
 
         parent.text = html.tostring(tree)
         parent.save()
