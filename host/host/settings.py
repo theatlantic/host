@@ -124,14 +124,14 @@ PIPELINE_CSS = {
     },
     "annotations": {
         "source_filenames": ('css/annotations.scss',),
-        "output_filename": "css/annotations.css",
+        "output_filename": "host/annotations.css",
     }
 }
 
 PIPELINE_JS = {
     "main": {
         "source_filenames": ('js/main.js',),
-        "output_filename": "js/main.js",
+        "output_filename": "host/annotations.js",
     }
 }
 

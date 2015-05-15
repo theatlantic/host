@@ -19,6 +19,9 @@ class PreView(TemplateView):
             for link in annotation_links:
                 annotation_id = int(link.attrib['data-annotation'])
 
+                if annotation_id < 0:
+                    continue
+
                 if annotation_id in inserted_annotations:
                     continue
                 inserted_annotations += [annotation_id]
